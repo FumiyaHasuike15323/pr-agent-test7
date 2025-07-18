@@ -22,11 +22,10 @@ jobs:
       - name: PR Agent
         uses: Codium-ai/pr-agent@main
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # GitHub Secretsに設定したOpenAIのAPIキー
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
           # PR作成時に自動で実行する機能を指定
           GITHUB_ACTION.AUTO_DESCRIBE: "true"
           GITHUB_ACTION.AUTO_REVIEW: "true"
           GITHUB_ACTION.AUTO_IMPROVE: "true"
-          PR_AGENT.CONFIG_PATH: ".pr-agent.toml"
-          PR_AGENT_LANGUAGE: "ja"
