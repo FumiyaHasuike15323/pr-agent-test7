@@ -22,6 +22,16 @@
   <button type="button" onclick="showCurrentTime()"
     style="background-color: #2196F3; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">現在時刻を表示</button>
 
+  <br><br>
+  <button type="button" onclick="toggleDarkMode()" id="darkModeBtn"
+    style="background-color: #333; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">ダークモード切替</button>
+
+  <br><br>
+  <textarea id="textInput" placeholder="テキストを入力してください..."
+    style="width: 300px; height: 100px; padding: 10px; margin: 10px 0;"></textarea>
+  <br>
+  <span id="charCount">文字数: 0</span>
+
   <script>
     function changeBackgroundColor() {
       const colors = ['#f0f0f0', '#e8f5e8', '#fff0f0', '#f0f0ff', '#fff8e1'];
@@ -34,6 +44,30 @@
       const timeString = now.toLocaleString('ja-JP');
       alert('現在時刻: ' + timeString);
     }
+
+    function toggleDarkMode() {
+      const body = document.body;
+      const btn = document.getElementById('darkModeBtn');
+
+      if (body.style.backgroundColor === 'black') {
+        body.style.backgroundColor = '';
+        body.style.color = '';
+        btn.style.backgroundColor = '#333';
+        btn.textContent = 'ダークモード切替';
+      } else {
+        body.style.backgroundColor = 'black';
+        body.style.color = 'white';
+        btn.style.backgroundColor = '#666';
+        btn.textContent = 'ライトモード切替';
+      }
+    }
+
+    // 文字数カウンター機能
+    document.getElementById('textInput').addEventListener('input', function () {
+      const text = this.value;
+      const count = text.length;
+      document.getElementById('charCount').textContent = `文字数: ${count}`;
+    });
   </script>
 
 </body>
