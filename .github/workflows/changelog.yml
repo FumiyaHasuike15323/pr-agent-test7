@@ -1,26 +1,48 @@
-# .github/workflows/changelog.yml
+# .github/workflows/changelog-staging.yml
 
-name: Update CHANGELOG
+name: Auto Update Changelog (Staging to Master)
 
 on:
   pull_request:
     types: [closed] # PRがクローズされたときに実行
+    branches:
+      - master # masterブランチへのPRのみ対象
 
 jobs:
   update_changelog:
-    # masterブランチにマージされたPRのみを対象にする
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
+    # stagingブランチからmasterブランチにマージされたPRのみを対象
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'staging'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
       issues: write
-      contents: write # CHANGELOG.mdを更新してコミットするために必要
+      contents: write # CHANGELOG.mdファイルをプッシュするために必要
     steps:
-      - name: Run PR Agent to Update CHANGELOG
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Run PR Agent Update Changelog
         uses: Codium-ai/pr-agent@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # GitHub Secretsに設定したOpenAIのAPIキー
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
-          # PRマージ時にCHANGELOG更新コマンドを自動実行
+          # changelogファイルに変更をプッシュする
+          PR_UPDATE_CHANGELOG__PUSH_CHANGELOG_CHANGES: "true"
+          # CI実行をスキップする（changelogコミットでCIが再実行されるのを防ぐ）
+          PR_UPDATE_CHANGELOG__SKIP_CI_ON_PUSH: "true"
+          # PRリンクを追加する
+          PR_UPDATE_CHANGELOG__ADD_PR_LINK: "true"
+          # 日本語でのchangelog生成指示
+          PR_UPDATE_CHANGELOG__EXTRA_INSTRUCTIONS: |
+            このプルリクエストの変更内容を、ユーザー向けに分かりやすく日本語で簡潔に記述してください。リリースの報告文章に使いたいです。
+            フォーマットは以下のようにしてください：
+            - ✨ 機能: 新機能の追加
+            - 🐛 修正: バグ修正
+            - 🔧 改善: 既存機能の改善
+            - 📚 ドキュメント: ドキュメントの更新
+            - 🎨 スタイル: コードスタイルの変更
+          # changelogコマンドを実行
           GITHUB_ACTION.AUTO_UPDATE_CHANGELOG: "true"
