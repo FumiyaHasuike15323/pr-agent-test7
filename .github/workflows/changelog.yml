@@ -21,6 +21,7 @@ jobs:
         env:
           # GitHub Secretsに設定したOpenAIのAPIキー
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
-          
           # PRマージ時にCHANGELOG更新コマンドを自動実行
           GITHUB_ACTION.AUTO_CHANGELOG: "true"
+          PR_AGENT.CONFIG_PATH: ".pr-agent.toml"
+          PR_AGENT_LANGUAGE: "ja"
