@@ -1,11 +1,17 @@
-[pr_agent]
-language = "Japanese"
-
 [pr_reviewer]
 auto_review = true
+language = "ja"
+extra_instructions = "レビューは日本語で行ってください"
 
 [pr_description]
 auto_describe = true
+language = "ja"
+extra_instructions = "説明は日本語で生成してください"
 
 [pr_improver]
 auto_improve = true
+language = "ja"
+extra_instructions = "コード提案は日本語で説明してください"
+
+[general]
+language = "ja"
