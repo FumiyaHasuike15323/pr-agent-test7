@@ -1,0 +1,8 @@
+[pr_reviewer]
+auto_review = true
+
+[pr_description]
+auto_describe = true
+
+[pr_improver]
+auto_improve = true
