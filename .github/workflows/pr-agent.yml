@@ -1,0 +1,31 @@
+name: PR Agent - Auto Review
+
+on:
+  # PRが開かれたり、レビューの準備ができたときに実行
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+  # PR上で "/review" などのコメントが投稿されたときに実行
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read # このワークフローでは書き込みは不要
+
+jobs:
+  pr_agent_job:
+    # Botからのイベントは無視する
+    if: github.event.sender.type != 'Bot'
+    runs-on: ubuntu-latest
+    steps:
+      - name: PR Agent
+        uses: Codium-ai/pr-agent@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GitHub Secretsに設定したOpenAIのAPIキー
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          # PR作成時に自動で実行する機能を指定
+          GITHUB_ACTION.AUTO_DESCRIBE: "true"
+          GITHUB_ACTION.AUTO_REVIEW: "true"
+          GITHUB_ACTION.AUTO_IMPROVE: "true"
