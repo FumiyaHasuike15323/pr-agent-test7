@@ -9,7 +9,7 @@ on:
 jobs:
   update_changelog:
     # masterブランチにマージされたPRのみを対象にする
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -24,3 +24,4 @@ jobs:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
           # PRマージ時にCHANGELOG更新コマンドを自動実行
           GITHUB_ACTION.AUTO_UPDATE_CHANGELOG: "true"
+          PR_AGENT_CONFIG_FILE: "./.pr-agent/pr-agent.toml"
