@@ -15,34 +15,26 @@
   <button type="button" onclick="alert('ボタンがクリックされました！')">クリックしてください</button><button type="button"
     onclick="alert('ボタンがクリックされました！')">クリックしてください</button><button type="button"
     onclick="alert('ボタンがクリックされました！')">クリックしてください</button>
-  <h2>これはテストです</h2>
-  <p>これはテストです</p>
-  <p>これはテストです</p>
-  <h3>これはテストです</h3>
-  <p>これはテストです</p>
-  <p>これはテストです</p>
-  <h4>これはテストです</h4>
-  <h2>これはテストです</h2>
-  <p>これはテストです</p>
-  <p>これはテストです</p>
-  <h3>これはテストです</h3>
-  <p>これはテストです</p>
-  <p>これはテストです</p>
-  <h4>これはテストです</h4>
-  <h2>これはテストです</h2>
-  <p>これはテストです</p>
-  <p>これはテストです</p>
-  <h3>これはテストです</h3>
-  <p>これはテストです</p>
-  <p>これはテストです</p>
-  <h4>これはテストです</h4>
-  <h2>これはテストです</h2>
-  <p>これはテストです</p>
-  <p>これはテストです</p>
-  <h3>これはテストです</h3>
-  <p>これはテストです</p>
-  <p>これはテストです</p>
-  <h4>これはテストです</h4>
+
+  <br><br>
+  <button type="button" onclick="changeBackgroundColor()"
+    style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">背景色を変更</button>
+  <button type="button" onclick="showCurrentTime()"
+    style="background-color: #2196F3; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">現在時刻を表示</button>
+
+  <script>
+    function changeBackgroundColor() {
+      const colors = ['#f0f0f0', '#e8f5e8', '#fff0f0', '#f0f0ff', '#fff8e1'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      document.body.style.backgroundColor = randomColor;
+    }
+
+    function showCurrentTime() {
+      const now = new Date();
+      const timeString = now.toLocaleString('ja-JP');
+      alert('現在時刻: ' + timeString);
+    }
+  </script>
 
 </body>
 
