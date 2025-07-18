@@ -1,0 +1,42 @@
+[pr_reviewer]
+auto_review = true
+language = "ja"
+extra_instructions = "レビューは日本語で行ってください"
+
+[pr_description]
+auto_describe = true
+language = "ja"
+extra_instructions = "説明は日本語で生成してください"
+
+[pr_improver]
+auto_improve = true
+language = "ja"
+extra_instructions = "コード提案は日本語で説明してください"
+
+[general]
+language = "ja"
+
+[changelog_generator]
+language = "ja"
+extra_instructions = |
+  changelogは日本語で生成してください。以下の形式で整理してください：
+  
+  ## 🚀 新機能
+  - 追加された機能の説明
+  
+  ## 🐛 バグ修正
+  - 修正されたバグの説明
+  
+  ## 🔧 改善・リファクタリング
+  - 改善された内容の説明
+  
+  ## 📝 ドキュメント
+  - ドキュメントの更新内容
+  
+  ## 🔄 その他の変更
+  - その他の変更内容
+  
+  各項目は具体的で分かりやすく記述し、技術的な詳細も含めてください。
+output_format = "markdown"
+include_commit_messages = true
+group_by_type = true 
