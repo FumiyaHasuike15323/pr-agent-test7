@@ -1,3 +1,6 @@
+[pr_agent]
+language = "Japanese"
+
 [pr_reviewer]
 auto_review = true
 
