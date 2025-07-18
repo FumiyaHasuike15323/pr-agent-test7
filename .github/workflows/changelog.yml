@@ -9,7 +9,7 @@ on:
 jobs:
   update_changelog:
     # masterブランチにマージされたPRのみを対象にする
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
