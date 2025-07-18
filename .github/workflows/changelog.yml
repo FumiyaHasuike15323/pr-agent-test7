@@ -24,3 +24,4 @@ jobs:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
           # PRマージ時にCHANGELOG更新コマンドを自動実行
           GITHUB_ACTION.AUTO_UPDATE_CHANGELOG: "true"
+          PR_AGENT_CONFIG_FILE: "./.pr-agent/pr-agent.toml"
