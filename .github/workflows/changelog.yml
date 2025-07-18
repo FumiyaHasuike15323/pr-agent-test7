@@ -1,0 +1,26 @@
+# .github/workflows/changelog.yml
+
+name: Update CHANGELOG
+
+on:
+  pull_request:
+    types: [closed] # PRがクローズされたときに実行
+
+jobs:
+  update_changelog:
+    # masterブランチにマージされたPRのみを対象にする
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
+      contents: write # CHANGELOG.mdを更新してコミットするために必要
+    steps:
+      - name: Run PR Agent to Update CHANGELOG
+        uses: Codium-ai/pr-agent@main
+        env:
+          # GitHub Secretsに設定したOpenAIのAPIキー
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          
+          # PRマージ時にCHANGELOG更新コマンドを自動実行
+          GITHUB_ACTION.AUTO_CHANGELOG: "true"

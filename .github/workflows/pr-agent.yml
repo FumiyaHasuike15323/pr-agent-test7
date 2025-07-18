@@ -1,56 +1,30 @@
+name: PR Agent - Auto Review
+
 on:
+  # PRが開かれたり、レビューの準備ができたときに実行
   pull_request:
-    types: [opened, reopened, ready_for_review, synchronize]
+    types: [opened, reopened, ready_for_review]
+  # PR上で "/review" などのコメントが投稿されたときに実行
   issue_comment:
-  push:
-    branches:
-      - master
+    types: [created]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read # このワークフローでは書き込みは不要
 
 jobs:
   pr_agent_job:
-    if: ${{ github.event.sender.type != 'Bot' }}
+    # Botからのイベントは無視する
+    if: github.event.sender.type != 'Bot'
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
-      contents: write
-    name: Run pr agent on every pull request, respond to user comments
     steps:
-    - name: PR Agent action step
-      id: pragent
-      uses: Codium-ai/pr-agent@main
-      env:
-        OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        github_action_config.auto_review: "true"
-        github_action_config.auto_describe: "true"
-        github_action_config.auto_improve: "true"
-
-  changelog_generator:
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    name: Generate changelog for master branch
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: Generate changelog
-      id: changelog
-      uses: Codium-ai/pr-agent@main
-      env:
-        OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PR_AGENT.CONFIG_PATH: ".github/pr-agent.toml"
-        PR_AGENT_LANGUAGE: "ja"
-      with:
-        args: |
-          generate_changelog
-          --base_branch staging
-          --target_branch master
-          --output_format markdown
-          --language ja
+      - name: PR Agent
+        uses: Codium-ai/pr-agent@main
+        env:
+          # GitHub Secretsに設定したOpenAIのAPIキー
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          # PR作成時に自動で実行する機能を指定
+          GITHUB_ACTION.AUTO_DESCRIBE: "true"
+          GITHUB_ACTION.AUTO_REVIEW: "true"
+          GITHUB_ACTION.AUTO_IMPROVE: "true"
