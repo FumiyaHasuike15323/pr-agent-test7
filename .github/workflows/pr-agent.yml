@@ -29,5 +29,12 @@ jobs:
           GITHUB_ACTION.AUTO_DESCRIBE: "true"
           GITHUB_ACTION.AUTO_REVIEW: "true"
           GITHUB_ACTION.AUTO_IMPROVE: "true"
-          PR_DESCRIPTION.EXTRA_INSTRUCTIONS: "answer in Japanese"
-          PR_REVIEWER.EXTRA_INSTRUCTIONS: "answer in Japanese"
+          PR_DESCRIPTION.EXTRA_INSTRUCTIONS: |
+          プルリクエストの変更内容を分析し、以下の項目を日本語で記述してください。
+          - **概要**: 変更の目的と全体像
+          - **主な変更点**: ファイルごとの具体的な変更内容
+          - **種類**: (例: 機能追加, バグ修正, リファクタリング)
+          PR_REVIEWER.EXTRA_INSTRUCTIONS: |
+          あなたは経験豊富なソフトウェアエンジニアです。日本語で、丁寧かつ建設的なレビューをしてください。
+          PR_IMPROVER.EXTRA_INSTRUCTIONS: |
+          コードの改善案を提示してください。その際、なぜそのように変更するのか、理由も日本語で簡潔に説明してください。
